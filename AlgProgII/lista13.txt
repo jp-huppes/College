@@ -1,0 +1,233 @@
+QUESTAO 01
+
+11 - 7 - 2
+-------------------------------------------
+
+QUESTAO 02 - 03 - 04 - 05 - 06
+
+#include <stdio.h>
+
+#define N 30
+
+void empilhe(int p[], int *t, int y);
+int desempilhe(int p[], int *t);
+
+int main(){
+    int p[N], t; 
+    t = 0; 
+    empilhe(p,&t,33);
+    empilhe(p,&t,7);
+    empilhe(p,&t,11);
+    printf("%d - ",desempilhe(p,&t));
+    printf("%d - ",desempilhe(p,&t));
+    empilhe(p,&t,2);
+    printf("%d - ",desempilhe(p,&t));
+
+    return 0;
+
+
+}
+
+void empilhe(int p[], int *t, int y){
+    if(*t == N)
+        printf("Stack Overflow detected!\n");
+    else{
+        p[*t] = y;
+        *t += 1;
+    }
+    return;
+}
+int desempilhe(int p[], int *t){
+    int num = 0, out;
+    if (*t == 0)
+        printf("Stack Underflow detected!\n");
+
+    else{
+        *t -= 1;
+        num = p[*t ];
+        p[*t ] = out;
+    }
+
+    return num;
+}
+-------------------------------------------
+
+QUESTAO 08
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 30
+
+struct cell{
+    int conteudo;
+    struct cell *seg, *ant;
+}; typedef struct cell celula;
+
+void insira(celula *p, int y);
+int desempilhe(celula *p);
+
+int main(){
+    celula c, *lst;
+    c.ant = &c; c.seg = &c;lst = &c;
+
+    insira(lst,33);
+    insira(lst,7);
+    insira(lst,11);
+    printf("%d - ",desempilhe(lst));
+    printf("%d - ",desempilhe(lst));
+    insira(lst,2);
+    printf("%d - ",desempilhe(lst));
+
+    return 0;
+
+
+}
+
+ insira(celula *p, int y){
+    celula *nova;
+    nova = (celula*) malloc(sizeof(celula));
+ void   nova->conteudo = y;
+    nova->seg = p->seg;
+    nova->ant = p;
+    p->seg = nova;
+    nova->seg->ant = nova;
+
+    return;
+}
+int desempilhe(celula *p){
+    int num = 0;
+    if (p->seg == p && p->ant == p)
+        printf("Stack Underflow");
+    else{
+        celula *last_celula = p->seg;
+        num = last_celula->conteudo;
+        p->seg = last_celula->seg;
+        last_celula->seg->ant = p;
+        
+        free(last_celula);
+    }
+    
+    return num;
+}
+
+-------------------------------------------
+
+QUESTAO 09
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 30
+
+struct cell
+{
+    int conteudo;
+    struct cell *seg, *ant;
+};
+typedef struct cell celula;
+
+void insira(celula **p, int y);
+int desempilhe(celula **p);
+
+int main()
+{
+    celula *lst = NULL;
+
+    insira(&lst, 33);
+    insira(&lst, 7);
+    insira(&lst, 11);
+    printf("%d - ", desempilhe(&lst));
+    printf("%d - ", desempilhe(&lst));
+    insira(&lst, 2);
+    printf("%d - ", desempilhe(&lst));
+
+    return 0;
+}
+
+void insira(celula **p, int y)
+{
+    celula *nova = (celula *)malloc(sizeof(celula));
+    nova->conteudo = y;
+    nova->ant = NULL;
+    if (p == NULL){
+        nova->seg = NULL;
+        (*p)->ant = nova;
+    }
+    else
+        nova->seg = *p;
+
+    *p = nova;
+    return;
+}
+int desempilhe(celula **p)
+{
+    int num = 0;
+
+    if (p == NULL){
+        printf("Stack Underflow");
+        num = -1;
+    }
+    else
+    {
+        celula *topo = (*p);
+        num = topo->conteudo;
+        *p = topo->seg;
+        if(*p != NULL)
+            (*p)->ant = NULL;
+
+        free(topo);
+    }
+
+    return num;
+}
+
+-------------------------------------------
+QUESTAO 10
+
+#include <stdio.h>
+
+#define N 30
+
+void empilhe(int p[], int *t, int y);
+int desempilhe(int p[], int *t);
+
+int main(){
+    int p1[N],p2[N], t1,t2; 
+    t1 = t2  = 0;
+    empilhe(p1,&t1,33);
+    empilhe(p1,&t1,7);
+    empilhe(p1,&t1,11);
+    empilhe(p2,&t2,desempilhe(p1,&t1));
+    empilhe(p2,&t2,desempilhe(p1,&t1));
+    empilhe(p1,&t1,2);
+    empilhe(p2,&t2,desempilhe(p1,&t1));
+    
+
+    return 0;
+
+
+}
+
+void empilhe(int p[], int *t, int y){
+    if(*t == N)
+        printf("Stack Overflow detected!\n");
+    else{
+        p[*t] = y;
+        *t += 1;
+    }
+    return;
+}
+int desempilhe(int p[], int *t){
+    int num = 0, out;
+    if (*t == 0)
+        printf("Stack Underflow detected!\n");
+
+    else{
+        *t -= 1;
+        num = p[*t ];
+        p[*t ] = out;
+    }
+
+    return num;
+}
